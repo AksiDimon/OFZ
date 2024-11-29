@@ -1,0 +1,56 @@
+.tableContainer {
+    flex-direction: column;
+    border: 1px solid black;
+    overflow-y: auto; /* Позволяет вертикальный скролл */
+    width: fit-content;
+    overflow-x: auto; /* Позволяет горизонтальный скролл для таблиц */
+}
+
+
+.flexContainer {
+    
+    border-bottom:  1px solid black;
+     display: flex;
+      background: gray ;
+      position: sticky;
+     
+}
+
+
+.dataContainer {
+    /* margin: 3px; */
+    padding: 10px;
+    flex: 1;
+    border-right: 1px solid black;
+    text-align: center;
+    font-size: 12px;
+
+}
+.flexContainer > .dataContainer:last-child {
+    border-right: none;
+}
+
+  /*------------------*/
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse; /* Убирает промежутки между ячейками */
+}
+
+th, td {
+    border: 1px solid black; 
+    text-align: center; 
+    padding: 10px; 
+    font-size: 10.5px;
+}
+
+th {
+    background-color: gray; 
+    position: sticky; /* Фиксирует заголовки */
+    top: 0; /* Фиксация у верхней границы при скролле */
+    z-index: 10; /* Приоритет отображения заголовков */
+}
+
+
+
