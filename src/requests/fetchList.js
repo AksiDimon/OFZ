@@ -1,5 +1,7 @@
+
 import { yearsToMaturity} from '../calcsFuncs/yearsToMaturity';
 import { getCouponYield} from '../calcsFuncs/getCouponYield';
+import {fusionTransform, transformSecurity, transformResponse} from '../transformHelpers/transformSecurity.js';
 const listDatas = {
   SECID: '',
   SHORTNAME: '',
@@ -60,31 +62,49 @@ const item = {
   FACEVALUEONSETTLEDATE: 1000,
 };
 
-// 1) достаю данные и привожу их в порядок давая каждому значению ключ
-function transformResponse({ columns, data }) {
-  const arr = [];
+// // 1) достаю данные и привожу их в порядок давая каждому значению ключ
+// function transformResponse({ columns, data }) {
+//   const arr = [];
 
-  for (const values of data) {
-    const obj = {};
-    let i = 0;
-    for (const column of columns) {
-      obj[column] = values[i];
-      i += 1;
-    }
-    arr.push(obj);
-  }
-  return arr;
-}
+//   for (const values of data) {
+//     const obj = {};
+//     let i = 0;
+//     for (const column of columns) {
+//       obj[column] = values[i];
+//       i += 1;
+//     }
+//     arr.push(obj);
+//   }
+//   return arr;
+// }
 
 export function fetchOfzBonds() {
   const url =
     'https://iss.moex.com/iss/engines/stock/markets/bonds/boards/TQOB/securities.json';
   return fetch(url)
     .then((response) => response.json())
-    .then(({ marketdata, securities }) => ({
-      marketdata: transformResponse(marketdata),
-      securities: transformResponse(securities),
-    }));
+    .then(({ marketdata, securities }) => {
+        console.log(
+            {
+                marketdata: transformResponse(marketdata),
+                securities: transformResponse(securities),
+              }
+        )
+        return {
+               marketdata: transformResponse(marketdata),
+               securities: transformResponse(securities),
+             }
+    })
+    
+    
+    // ({
+    //   marketdata: transformResponse(marketdata),
+    //   securities: transformResponse(securities),
+    // }))
+    .then(({marketdata, securities}) => {
+        return fusionTransform(marketdata, securities)
+    })
+    .then(obj => transformSecurity(obj))
 }
 
 fetchOfzBonds().then(console.log);
@@ -93,32 +113,81 @@ fetchOfzBonds().then(console.log);
 
 
 
-//2) 
-// у меня  два разных массива, дальше каждый из этих массивов переделать в объект где ключем будет SECID, и потом можно будет их мержить
-function fusionTransform (marketdata, securities) {
-    const obj = {}
-    for(let i = 0; i < marketdata.length; i += 1 ) {
-        obj[marketdata[i].SECID] = {...marketdata[i], ...securities[i]}
-    // console.log(marketdata[i].SECID)
-    }
-      console.log(obj, 'fusionTransform')
-    return obj
-}
+// //2) 
+// // у меня  два разных массива, дальше каждый из этих массивов переделать в объект где ключем будет SECID, и потом можно будет их мержить
+// function fusionTransform (marketdata, securities) {
+//     const obj = {}
+//     for(let i = 0; i < marketdata.length; i += 1 ) {
+//         obj[marketdata[i].SECID] = {...marketdata[i], ...securities[i]}
+//     // console.log(marketdata[i].SECID)
+//     }
+//       console.log(obj, 'fusionTransform')
+//     return obj
+// }
 
-fetchOfzBonds().then(({marketdata, securities}) => {
-    // const obj = {}
-    // for(let i = 0; i < marketdata.length; i += 1 ) {
-    //     obj[marketdata[i].SECID] = {...marketdata[i], ...securities[i]}
-    // // console.log(marketdata[i].SECID)
-    // }
-    //   console.log(obj)
-    // return obj
-    return fusionTransform(marketdata, securities)
+// fetchOfzBonds().then(({marketdata, securities}) => {
+//     // const obj = {}
+//     // for(let i = 0; i < marketdata.length; i += 1 ) {
+//     //     obj[marketdata[i].SECID] = {...marketdata[i], ...securities[i]}
+//     // // console.log(marketdata[i].SECID)
+//     // }
+//     //   console.log(obj)
+//     // return obj
+//     return fusionTransform(marketdata, securities)
     
-})
-.then(obj =>  {
+// })
+// .then(obj =>  {
+// //     const result = [];
+// //     let num = 0
+// //   for (let bond in obj) {
+// //     const myObj = {
+// //         '№': '',
+// //         'SECID': '-',
+// //         'Имя':'-',
+// //         'Погашение' : '-',
+// //         'Лет до погашения': '?',
+// //         'Доходность': '-',
+// //         'Год. куп. дох' : '-',
+// //         'Куп. дох. посл' : '?',
+// //         'Цена' : '-',
+// //         'Купон, руб' : '-',
+// //         'Частота раз в год' : '-',
+// //         'НКД': '-',
+// //         'Дюрация' : '-',
+// //         'Дата купона' : '-',
+// //         'ISIN'  : '-',
+// //         'Номинал облигации'  : '-',
+// //     }; 
+
+// //     myObj['№'] = num
+// //     myObj['SECID'] = bond
+// //     myObj['Имя'] = obj[bond].SHORTNAME
+// //     myObj['Погашение'] = obj[bond].MATDATE
+// //     myObj['Лет до погашения'] = yearsToMaturity(obj[bond].MATDATE) // функция yearsToMaturity(obj[bond].MATDATE)
+// //     myObj['Доходность'] = `${obj[bond].YIELD}%` 
+// //     myObj['Год. куп. дох'] =  `${obj[bond].COUPONPERCENT}%` 
+// //     myObj['Куп. дох. посл'] =  getCouponYield(obj[bond].MARKETPRICE, obj[bond].COUPONPERCENT)
+// //     myObj['Цена'] = obj[bond].MARKETPRICE
+// //     myObj['Купон, руб'] = obj[bond].COUPONVALUE
+// //     myObj['Частота раз в год'] = (365/  obj[bond].COUPONPERIOD).toFixed()
+// //     myObj['НКД'] = obj[bond].ACCRUEDINT
+// //     myObj['Дюрация'] = obj[bond].DURATION
+// //     myObj['Дата купона'] = obj[bond].NEXTCOUPON
+// //     myObj['ISIN'] = obj[bond].ISIN
+// //     myObj['Номинал облигации'] = obj[bond].LOTVALUE
+// //     result.push(myObj)
+// //     num += 1
+
+    
+// //   }
+// //   console.log(result, 'transformSecurity')
+// //   return result
+// return transformSecurity(obj)
+// })
+
+// function transformSecurity(obj) { // заготовка что бы верхний then, логику вынести в функцию 
 //     const result = [];
-//     let num = 0
+//     let num = 1
 //   for (let bond in obj) {
 //     const myObj = {
 //         '№': '',
@@ -162,57 +231,8 @@ fetchOfzBonds().then(({marketdata, securities}) => {
 //   }
 //   console.log(result, 'transformSecurity')
 //   return result
-return transformSecurity(obj)
-})
 
-function transformSecurity(obj) { // заготовка что бы верхний then, логику вынести в функцию 
-    const result = [];
-    let num = 1
-  for (let bond in obj) {
-    const myObj = {
-        '№': '',
-        'SECID': '-',
-        'Имя':'-',
-        'Погашение' : '-',
-        'Лет до погашения': '?',
-        'Доходность': '-',
-        'Год. куп. дох' : '-',
-        'Куп. дох. посл' : '?',
-        'Цена' : '-',
-        'Купон, руб' : '-',
-        'Частота раз в год' : '-',
-        'НКД': '-',
-        'Дюрация' : '-',
-        'Дата купона' : '-',
-        'ISIN'  : '-',
-        'Номинал облигации'  : '-',
-    }; 
-
-    myObj['№'] = num
-    myObj['SECID'] = bond
-    myObj['Имя'] = obj[bond].SHORTNAME
-    myObj['Погашение'] = obj[bond].MATDATE
-    myObj['Лет до погашения'] = yearsToMaturity(obj[bond].MATDATE) // функция yearsToMaturity(obj[bond].MATDATE)
-    myObj['Доходность'] = `${obj[bond].YIELD}%` 
-    myObj['Год. куп. дох'] =  `${obj[bond].COUPONPERCENT}%` 
-    myObj['Куп. дох. посл'] =  getCouponYield(obj[bond].MARKETPRICE, obj[bond].COUPONPERCENT)
-    myObj['Цена'] = obj[bond].MARKETPRICE
-    myObj['Купон, руб'] = obj[bond].COUPONVALUE
-    myObj['Частота раз в год'] = (365/  obj[bond].COUPONPERIOD).toFixed()
-    myObj['НКД'] = obj[bond].ACCRUEDINT
-    myObj['Дюрация'] = obj[bond].DURATION
-    myObj['Дата купона'] = obj[bond].NEXTCOUPON
-    myObj['ISIN'] = obj[bond].ISIN
-    myObj['Номинал облигации'] = obj[bond].LOTVALUE
-    result.push(myObj)
-    num += 1
-
-    
-  }
-  console.log(result, 'transformSecurity')
-  return result
-
-}
+// }
 
 
 

@@ -5,22 +5,22 @@ import { Link } from 'react-router-dom';
 
 
 const headerNamesRUS = [
-    '№',
-    'SECID',
-    'Имя',
-    'Погашение',
-    'Лет до погашения  !',
-    'Доходность',
-    'Год. куп. дох',
-    'Куп. дох. посл.',
-    'Цена !',
-    'Купон, руб',
-    'Частота раз в год',
-    'НКД, руб',
-    'Дюрация !',
-    'Дата купона',
-    'ISIN',
-    'Номинал облигации',
+      '№',
+      'SECID',
+      'Имя',
+      'Погашение',
+      'Лет до погашения',
+      'Доходность',
+      'Год. куп. дох.',
+      'Куп. дох. посл.',
+      'Цена',
+      'Купон, руб.',
+      'Частота раз в год',
+      'НКД',
+      'Дюрация',
+      'Дата купона',
+      'ISIN',
+      'Номинал облигации',
 ];
 const headerNamesEN = ['№', 'SECID', 'SHORTNAME', 'MATDATE', 'YIELDATPREVWAPRICE', 'Profitability', 'COUPONPERCENT', 'PREVWAPRICE', 'ISSUESIZE', 'COUPONVALUE', 'COUPONPERIOD', 'ACCRUEDINT', 'DURATION', 'NEXTCOUPON', 'ISIN', 'LOTVALUE']
 
@@ -32,7 +32,7 @@ export function List() {
     useEffect(() => {
         // headers().then(data => setHeaderNames(data))
         // durationReqest().then(val => setDurationReqest(val))
-        fetchList().then(val => setListData(val))
+        fetchOfzBonds().then(val => setListData(val))
     }, [])
 
     // console.log(ListData, '👹')
@@ -86,7 +86,7 @@ export function List() {
                         return (
                             // console.log(arrBond,' ___')
                             <tr>
-                                {arrBond.map((val, index)=> {
+                                {Object.values(arrBond).map((val, index)=> {
                                     return (
                                         
                                             <td key = {index} >
