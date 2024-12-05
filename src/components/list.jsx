@@ -2,6 +2,7 @@ import s from './list.module.css'
 import {fetchOfzBonds ,fetchList, headers, durationReqest } from '../requests/fetchList.js'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+// import { calculateAge } from '../calcsFuncs/calcsQuotes/calculateAge';
 
 
 const headerNamesRUS = [

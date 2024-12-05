@@ -66,7 +66,7 @@ for (let bond in obj) {
   myObj['Купон, руб.'] = obj[bond].COUPONVALUE
   myObj['Частота раз в год'] = (365/  obj[bond].COUPONPERIOD).toFixed()
   myObj['НКД'] = obj[bond].ACCRUEDINT
-  myObj['Дюрация'] = obj[bond].DURATION
+  myObj['Дюрация'] = (obj[bond].DURATION / 365).toFixed(2)
   myObj['Дата купона'] = obj[bond].NEXTCOUPON
   myObj['ISIN'] = obj[bond].ISIN
   myObj['Номинал облигации'] = obj[bond].LOTVALUE
@@ -103,7 +103,7 @@ for(const obj of result) {
   mainObj.push(orderedObj)
 }
 
-console.log(result, 'transformSecurity')
+// console.log(result, 'transformSecurity')
 return result
 
 }
