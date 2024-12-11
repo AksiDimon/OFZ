@@ -15,7 +15,7 @@ export function ChartQuotes() {
     useEffect(() => {
         fetchOfzBonds().then(data => {
             
-            const filterYield = data.filter(obj => obj['Доходность'] > 0) //фильтрую по доходности 
+            const filterYield = data.filter(obj => obj['yield'] > 0) //фильтрую по доходности 
 
              console.log(filterYield, data, 'DATA')
             setListData(filterYield)
@@ -31,7 +31,7 @@ export function ChartQuotes() {
     const maxRate = findMaxMinPersents(ListData).maxPersent;
     const minRate = findMaxMinPersents(ListData).minPersent;
     
-    // const listIncreaseRate = ListData.map(ofz => Number(ofz.Доходность)).sort((a, b) => a - b)
+    // const listIncreaseRate = ListData.map(ofz => Number(ofz.yield)).sort((a, b) => a - b)
 
     // const maxRate = listIncreaseRate.at(-1);
     // const minRate = listIncreaseRate.find(num => num > 0)
@@ -45,10 +45,10 @@ console.log(maxRate, minRate, '___________')
         <>
             <div className={s.mainSquare}>
                 
-                {ListData. map((obj, i )=> {
+                {ListData.map((obj, i )=> {
                      const fixedCupon = obj['name'].startsWith('26',4)
 
-                    //console.log(obj.Доходность, maxRate, minRate, '👄', positionY(obj.Доходность, maxRate, minRate))
+                    //console.log(obj.yield, maxRate, minRate, '👄', positionY(obj.yield, maxRate, minRate))
                     // if (fixedCupon && obj['name'] !== 'ОФЗ 26231' ) {
                         return (
                             
@@ -56,14 +56,14 @@ console.log(maxRate, minRate, '___________')
                                 className={s.printPoint}
                                 style={{
                                     left: `${positionX(minYearsToEnd, maxYearsToEnd, obj.endDate)}%`,
-                                    bottom: `${positionY(obj.Доходность, maxRate, minRate)}%`,
-                                    // zIndex: `${i}`,
+                                    bottom: `${positionY(obj.yield, maxRate, minRate)}%`,
+                                    //  zIndex: `${1}`,
                                 }}
                             >  
                                 <div className={s.printInformation}>
                                    <h3>{obj.name}</h3> 
-                                   <div>{`Лет до погаш: ${obj['Лет до погашения']}`}</div> 
-                                   <div>{`Доходнсть: ${obj.Доходность}%`}</div>
+                                   <div>{`Лет до погаш: ${obj['yearsToEnd']}`}</div> 
+                                   <div>{`Доходнсть: ${obj.yield}%`}</div>
                                 </div>
                                 <div className={s.arrow}> ❯</div>
                                 <div className={s.nameOfPoint}>

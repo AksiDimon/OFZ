@@ -83,13 +83,17 @@ th {
 .printPoint{
     position: absolute;
     border-radius: 50%;
-    width: 4px;
-    height: 4px;
+    width: 7px;
+    height: 7px;
     background: navy;
+    border: 1px solid #B39F7A;
     transform: translate(-50%, 50%);
     font-size: 10px;
     z-index: 1; /* Понижаем слой точки */
 }
+
+
+
 
 /* отрисовка названия облигации под точкой  */
 .nameOfPoint {
@@ -98,37 +102,55 @@ th {
     top: 120%;
     left: 50%;
     transform: translateX(-50%);
-    display: none;
+    /* display: none; */
     white-space: nowrap; 
-    font-size: 10px;
+    font-size: 4px;
     color: black; 
+    
+    /*mess around */
+    opacity: 0.7;
+    transition: all 0.3s ease-in-out; /* Плавная анимация */
 }
 /* отрисовка при навидении по дточкой, курсором на точку */
 .printPoint:hover .nameOfPoint {
+    opacity: 1;
+    font-size: 12px;
     display: block;
 }
+
+
+
+
+
 
 /* отрисовка данных об облигации над точкой  */
 .printInformation {
     background-color: bisque;
     border: 1px solid rgba(0, 0, 0, 0.577);
     box-shadow: 0 0 4px #000;
-    display: none;
+    /* display: none; */
     position: absolute;
     /* top: 120%; */
     left: 50%;
     transform: translateX(-50%) translateY(-120%);
     white-space: nowrap; 
-    font-size: 10px;
+    font-size: 0px;
     color: black; 
     font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
     padding: 0px 8px 8px 8px;
     border-radius: 4px;
-    z-index: 10;
+    z-index: 0;
+
+    /*mess around */
+    transition: all 0.3s ease-in-out; /* Плавная анимация */
+    opacity: 0;
 }
 
 /* отрисовка при навидении над дточкой, курсором на точку */
 .printPoint:hover .printInformation {
+    
+    opacity: 1;
+    font-size: 10px;
     z-index: 100;
     display: block;
 }
@@ -176,10 +198,10 @@ th {
 .stickY {
     /* transform: rotate(90deg); */
     /* transform: translate(170%, 20%); */
-    border-bottom: 1px solid black;
-    margin-left: 40px;
-    width: 750px;
+    border-bottom: 1px solid #AFDAFC;
+    margin-left: 49px;
+    width: 680px;
 }
 
-
+/* RGB(175,218,252) */
 

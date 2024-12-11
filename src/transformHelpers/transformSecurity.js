@@ -40,36 +40,36 @@ for (let bond in obj) {
       'SECID': '-',
       'name':'-',
       'endDate' : '-',
-      'Лет до погашения': '?',
-      'Доходность': '-',
-      'Год. куп. дох.' : '-',
-      'Куп. дох. посл.' : '?',
-      'Цена' : '-',
-      'Купон, руб.' : '-',
-      'Частота раз в год' : '-',
-      'НКД': '-',
-      'Дюрация' : '-',
-      'Дата купона' : '-',
+      'yearsToEnd': '?',
+      'yield': '-',
+      'couponPersent' : '-',
+      'getCouponYield' : '?',
+      'marketPrice' : '-',
+      'couponRub' : '-',
+      'paymentsInYear' : '-',
+      'NKD': '-',
+      'durartion' : '-',
+      'nextCoupon' : '-',
       'ISIN'  : '-',
-      'Номинал облигации'  : '-',
+      'lotValue'  : '-',
   }; 
 
   myObj['№'] = num
   myObj['SECID'] = bond
   myObj['name'] = obj[bond].SHORTNAME  //Имя
   myObj['endDate'] = obj[bond].MATDATE //Погашение
-  myObj['Лет до погашения'] = yearsToMaturity(obj[bond].MATDATE) // функция yearsToMaturity(obj[bond].MATDATE)
-  myObj['Доходность'] = obj[bond].YIELD 
-  myObj['Год. куп. дох.'] =  obj[bond].COUPONPERCENT
-  myObj['Куп. дох. посл.'] =  getCouponYield(obj[bond].MARKETPRICE, obj[bond].COUPONPERCENT)
-  myObj['Цена'] = obj[bond].MARKETPRICE
-  myObj['Купон, руб.'] = obj[bond].COUPONVALUE
-  myObj['Частота раз в год'] = (365/  obj[bond].COUPONPERIOD).toFixed()
-  myObj['НКД'] = obj[bond].ACCRUEDINT
-  myObj['Дюрация'] = (obj[bond].DURATION / 365).toFixed(2)
-  myObj['Дата купона'] = obj[bond].NEXTCOUPON
+  myObj['yearsToEnd'] = yearsToMaturity(obj[bond].MATDATE) // Лет до погашения
+  myObj['yield'] = obj[bond].YIELD //Доходность %
+  myObj['couponPersent'] =  obj[bond].COUPONPERCENT //Год. куп. дох.
+  myObj['getCouponYield'] =  getCouponYield(obj[bond].MARKETPRICE, obj[bond].COUPONPERCENT) //Куп. дох. посл.
+  myObj['marketPrice'] = obj[bond].MARKETPRICE //Цена
+  myObj['couponRub'] = obj[bond].COUPONVALUE //Купон, руб.
+  myObj['paymentsInYear'] = (365/  obj[bond].COUPONPERIOD).toFixed() //Частота раз в год
+  myObj['NKD'] = obj[bond].ACCRUEDINT //НКД
+  myObj['durartion'] = (obj[bond].DURATION / 365).toFixed(2) //Дюрация
+  myObj['nextCoupon'] = obj[bond].NEXTCOUPON //Дата купона
   myObj['ISIN'] = obj[bond].ISIN
-  myObj['Номинал облигации'] = obj[bond].LOTVALUE
+  myObj['lotValue'] = obj[bond].LOTVALUE //Номинал облигации
   result.push(myObj)
   num += 1
 

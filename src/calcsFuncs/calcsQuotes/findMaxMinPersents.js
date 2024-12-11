@@ -1,6 +1,6 @@
  //import { ofzResponseMock } from "../../ofzResponseMock";
 export function findMaxMinPersents (ofzResponseMock) {
-    const sort =  ofzResponseMock.map(obj => obj['Доходность']).sort((a,b) => a - b);
+    const sort =  ofzResponseMock.map(obj => obj['yield']).sort((a,b) => a - b);
     return {
        maxPersent: sort.at(-1),
        minPersent: sort[0]
