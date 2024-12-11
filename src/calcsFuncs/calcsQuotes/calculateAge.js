@@ -1,9 +1,19 @@
  import { ofzResponseMock } from "../../ofzResponseMock";
  export function calculateAge (arrOfzs) {
-//сортирую по дате огашения от max к min
+//способ 1 сортирую от min до max
+    const  sortedYears = arrOfzs.map(ofz => ofz.endDate).sort();
+     console.log(sortedYears, '!!!!');
+    
+//2 Способ сортирую от max до min, здесь он сравнивает построчно каждый объект(obj1,obj2),  по индексно 
     const sort = arrOfzs.sort((obj1,obj2) => {
-        const endBond1 = obj1.Погашение.split('-');
-        const endBond2 = obj2.Погашение.split('-');
+        // console.log(obj1.endDate);
+        
+        // return obj1.endDate > obj2.endDate ? -1 : 1;
+        // '2041-05-12' > '2027-09-25'
+
+//3 способ более детальной сортировки 2 способа, при этом с другими объектами.
+        const endBond1 = obj1.endDate.split('-');
+        const endBond2 = obj2.endDate.split('-');
         // console.log(endBond1[0], 'endBond1')
         if( Number(endBond1[0]) > Number(endBond2[0])) {
             return -1
@@ -24,13 +34,19 @@
             return 1
         }
     })
-    const maxYearsToEnd = Math.ceil(yearsToMaturity(sort[0].Погашение))
-
-    console.log(yearsToMaturity(sort.at(-1).Погашение), 'мин лет до погашения') //мин лет до погашения
-    return [...Array(maxYearsToEnd).keys(), maxYearsToEnd] 
+    console.log(typeof(sortedYears.at(-1)) , '!!!!');
+    const maxYearsToEnd = Math.ceil(yearsToMaturity(sortedYears.at(-1)))
+    
+    const minYearsToEnd = yearsToMaturity(sortedYears[0])
+   // console.log(yearsToMaturity(sortedYears[0]), 'мин лет до погашения') //мин лет до погашения
+    return {
+        yearsBottomLine: [...Array(maxYearsToEnd).keys(), maxYearsToEnd],
+        maxYearsToEnd: sortedYears.at(-1),
+        minYearsToEnd: sortedYears[0],
+    }  
 }
 
-console.log(calculateAge(ofzResponseMock), '+++' )
+//console.log(calculateAge(ofzResponseMock), '+++' )
 
 
 
@@ -48,7 +64,7 @@ function yearsToMaturity(matDate) {
     const finishYear = Number(matDate.split('-')[0]);
     const finishMonth = Number(matDate.split('-')[1]) - 1;
     const finishDay = Number(matDate.split('-')[2]);
-   // console.log({yearNow,finishYear},{monthNow,finishMonth},{dayNow,finishDay})
+    console.log({finishDay,finishMonth,finishYear}, '❯')
 
     const restYear = finishYear - yearNow;
     const restMonth = finishMonth - monthNow;
@@ -67,13 +83,14 @@ function yearsToMaturity(matDate) {
         halperMonth += 12
         halperYear -= 1
     }
-    console.log(halperYear, halperMonth, halperDay)
+    //console.log(halperYear, halperMonth, halperDay)
     const result = halperYear + (halperMonth / 12) + (halperDay / 365)
-    return result.toFixed(5)
+    console.log(result, '@@@')
+    return result
 }
 
 // // Пример вызова
- console.log(yearsToMaturity("2033-03-23")); // Ожидаемый результат: 8.32418
+//console.log(yearsToMaturity("2033-03-23"), 'yearsToMaturity'); // Ожидаемый результат: 8.32418
 
 
 

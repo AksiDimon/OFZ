@@ -12,7 +12,7 @@ export function getCouponYield (MARKETPRICE, COUPONPERCENT) {
 
 
 //console.log(KupDoxPosL(79.187, 8.15))
-console.log(getCouponYield(null, 8.15))
+//console.log(getCouponYield(null, 8.15))
 
 // const price = Number((resultAllBonds[i][7] * 10).toFixed(2)); // price
 // const yieldPersent = Number(resultAllBonds[i][6].slice(0, -1)) * 10;

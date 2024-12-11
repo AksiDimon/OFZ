@@ -86,9 +86,9 @@ export function fetchOfzBonds() {
     .then(({ marketdata, securities }) => {
         console.log(
             {
-                marketdata: transformResponse(marketdata),
-                securities: transformResponse(securities),
-              }
+               marketdata: transformResponse(marketdata),
+               securities: transformResponse(securities),
+             }
         )
         return {
                marketdata: transformResponse(marketdata),

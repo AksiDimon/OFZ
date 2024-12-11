@@ -1,7 +1,7 @@
 export function yearsToMaturity (matDate) {
     const yearNow = new Date().getFullYear();
     const monthNow = new Date().getMonth() + 1;
-    console.log(yearNow,monthNow)
+   // console.log(yearNow,monthNow)
     // const yearNow = Number(nowDate.split('-')[0])
     // const monthNow = Number(nowDate.split('-')[1])
     // console.log(yearNow,monthNow)
@@ -16,6 +16,6 @@ export function yearsToMaturity (matDate) {
     return yearsToMaturity.toFixed(1)
 }
 
-console.log(yearsToMaturity('2025-09-24'))
+//console.log(yearsToMaturity('2025-09-24'))
 // console.log(yearsToMaturity('2033-05-11'))
 // '2024-10'

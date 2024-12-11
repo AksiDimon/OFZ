@@ -2,7 +2,11 @@ body {
     width: 100%;
     margin: 0;
     background: rgb(245,245,220); /* Цвет фона */
+    
   }
+* {
+    box-sizing: border-box;
+}
 
 .tableContainer {
     flex-direction: column;
@@ -63,13 +67,119 @@ th {
 
 
 /* STYLES FOR  ChartQuotes*/
-
+/* пример для отображения координат, облигаций относительно их погашений и процентной ставки. */
+/* file:///Users/dimaaksenov/Downloads/1.html */
 .mainSquare {
     background: white;
     position: relative;
-    margin: 40px 30px;
+    margin: 60px 90px;
     width: 100%;
     height: 400px;
     border: 1px solid black;
-    border-radius: 5px;
+    /* border-radius: 5px; */
+    box-shadow: 0 0 4px #000;
 }
+
+.printPoint{
+    position: absolute;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    background: navy;
+    transform: translate(-50%, 50%);
+    font-size: 10px;
+    z-index: 1; /* Понижаем слой точки */
+}
+
+/* отрисовка названия облигации под точкой  */
+.nameOfPoint {
+    /* display: none; */
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    white-space: nowrap; 
+    font-size: 10px;
+    color: black; 
+}
+/* отрисовка при навидении по дточкой, курсором на точку */
+.printPoint:hover .nameOfPoint {
+    display: block;
+}
+
+/* отрисовка данных об облигации над точкой  */
+.printInformation {
+    background-color: bisque;
+    border: 1px solid rgba(0, 0, 0, 0.577);
+    box-shadow: 0 0 4px #000;
+    display: none;
+    position: absolute;
+    /* top: 120%; */
+    left: 50%;
+    transform: translateX(-50%) translateY(-120%);
+    white-space: nowrap; 
+    font-size: 10px;
+    color: black; 
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+    padding: 0px 8px 8px 8px;
+    border-radius: 4px;
+    z-index: 10;
+}
+
+/* отрисовка при навидении над дточкой, курсором на точку */
+.printPoint:hover .printInformation {
+    z-index: 100;
+    display: block;
+}
+
+
+.arrow {
+    font-size: 15px;
+    display: none;
+    position: absolute;
+    top: -15px;
+    left: -2px;
+    transform: translateX(-50%) ;
+    transform: rotate(90deg);
+
+}
+.printPoint:hover .arrow{
+    display: block;
+}
+
+
+
+/* Отрисовка полосы с годами */
+.stripYears {
+    top: 100%;
+    position: absolute;
+    /* white-space: nowrap; */
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.stick {
+    /* transform: translate(45%, 20%); */
+    margin-bottom: 5px;
+    border-left: 1px solid black;
+    height: 10px;
+}
+
+/* отрисовка столбика процентов слева от графика */
+
+.stripY {
+    position: absolute;
+    left: -7%;
+}
+
+.stickY {
+    /* transform: rotate(90deg); */
+    /* transform: translate(170%, 20%); */
+    border-bottom: 1px solid black;
+    margin-left: 40px;
+    width: 750px;
+}
+
+
+

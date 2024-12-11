@@ -38,8 +38,8 @@ for (let bond in obj) {
   const myObj = {
       '№': '',
       'SECID': '-',
-      'Имя':'-',
-      'Погашение' : '-',
+      'name':'-',
+      'endDate' : '-',
       'Лет до погашения': '?',
       'Доходность': '-',
       'Год. куп. дох.' : '-',
@@ -56,11 +56,11 @@ for (let bond in obj) {
 
   myObj['№'] = num
   myObj['SECID'] = bond
-  myObj['Имя'] = obj[bond].SHORTNAME
-  myObj['Погашение'] = obj[bond].MATDATE
+  myObj['name'] = obj[bond].SHORTNAME  //Имя
+  myObj['endDate'] = obj[bond].MATDATE //Погашение
   myObj['Лет до погашения'] = yearsToMaturity(obj[bond].MATDATE) // функция yearsToMaturity(obj[bond].MATDATE)
-  myObj['Доходность'] = `${obj[bond].YIELD}%` 
-  myObj['Год. куп. дох.'] =  obj[bond].COUPONPERCENT !== null ? `${obj[bond].COUPONPERCENT}%` : `0%`
+  myObj['Доходность'] = obj[bond].YIELD 
+  myObj['Год. куп. дох.'] =  obj[bond].COUPONPERCENT
   myObj['Куп. дох. посл.'] =  getCouponYield(obj[bond].MARKETPRICE, obj[bond].COUPONPERCENT)
   myObj['Цена'] = obj[bond].MARKETPRICE
   myObj['Купон, руб.'] = obj[bond].COUPONVALUE
@@ -103,7 +103,7 @@ for(const obj of result) {
   mainObj.push(orderedObj)
 }
 
-// console.log(result, 'transformSecurity')
+ console.log(result, 'transformSecurity')
 return result
 
 }
